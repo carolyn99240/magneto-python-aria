@@ -22,7 +22,7 @@ class MirrorStatus:
 
 
 PROGRESS_MAX_SIZE = 100 // 8
-PROGRESS_INCOMPLETE = ['▣', '▣', '▣', '▣', '▣', '▣', '▣']
+PROGRESS_INCOMPLETE = ['●', '●', '●', '●', '●', '●', '●']
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -77,10 +77,10 @@ def get_progress_bar_string(status):
     p = min(max(p, 0), 100)
     cFull = p // 8
     cPart = p % 8 - 1
-    p_str = '▣' * cFull
+    p_str = '●' * cFull
     if cPart >= 0:
         p_str += PROGRESS_INCOMPLETE[cPart]
-    p_str += '▢' * (PROGRESS_MAX_SIZE - cFull)
+    p_str += '○' * (PROGRESS_MAX_SIZE - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -93,7 +93,7 @@ def get_readable_message():
             msg += f"\n<b>Status</b>: <code>{download.status()}</code>"
             if download.status() != MirrorStatus.STATUS_ARCHIVING:
                 msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code>" \
-                       f"\n<b>Size:</b> <code>{get_readable_file_size(download.processed_bytes())}/{download.size()}</code>" \
+                       f"\n<b>Downloaded:</b> <code>{get_readable_file_size(download.processed_bytes())}</code> of <code>{download.size()}</code>" \
                        f"\n<b>Speed:</b> <code>{download.speed()}</code>, \n<b>ETA:</b> <code>{download.eta()}</code> "
                 # if hasattr(download, 'is_torrent'):
                 try:

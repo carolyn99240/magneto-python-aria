@@ -265,11 +265,11 @@ class GoogleDriveHelper:
                     err = str(e).replace('>', '').replace('<', '')
                 LOGGER.error(err)
                 return err
-            msg += f'<b>Drive Link :</b> <a href="{self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)}">{meta.get("name")}</a>' \
-                   f'\n<b>Size :</b>({get_readable_file_size(self.transferred_size)})'
+            msg += f'<a href="{self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)}">{meta.get("name")}</a>' \
+                   f' ({get_readable_file_size(self.transferred_size)})'
             if INDEX_URL is not None:
                 url = requests.utils.requote_uri(f'{INDEX_URL}/{meta.get("name")}/')
-                msg += f'\n<b>Index URL :</b> <a href="{url}">Just tap & hold and copy me</a>'
+                msg += f'\n<b>Index URL :</b> <a href="{url}">Just tap, hold and copy!</a>'
         else:
             try:
                 file = self.copyFile(meta.get('id'), parent_id)
@@ -281,12 +281,12 @@ class GoogleDriveHelper:
                     err = str(e).replace('>', '').replace('<', '')
                 LOGGER.error(err)
                 return err
-            msg += f'<b>Drive Link :</b> <a href="{self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))}">{file.get("name")}</a>'
+            msg += f'<a href="{self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))}">{file.get("name")}</a>'
             try:
-                msg += f'\n<b>Size :</b> {get_readable_file_size(int(meta.get("size")))} '
+                msg += f' ({get_readable_file_size(int(meta.get("size")))}) '
                 if INDEX_URL is not None:
                     url = requests.utils.requote_uri(f'{INDEX_URL}/{file.get("name")}')
-                    msg += f'\n<b>Index URL :</b> <a href="{url}">Just tap & hold and copy me</a>'
+                    msg += f'\n<b>Index URL :</b> <a href="{url}">Just tap, hold and copy!</a>'
             except TypeError:
                 pass
         return msg
